@@ -22,6 +22,5 @@ public class Product {
     private String image;
 
     @ManyToOne
-    @JoinColumn
     private Cart cart;
 }

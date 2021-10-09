@@ -17,7 +17,6 @@ public class Cart {
     private BigDecimal shippingRate;
 
     @OneToMany(mappedBy = "cart")
-    @JoinColumn
     private List<Product> products;
 
 }
