@@ -25,6 +25,7 @@ public class Cart {
 
     public void addProduct(Product product) {
         products.add(product);
+        subTotal.add(product.getPrice());
         addShippingRate();
     }
 
