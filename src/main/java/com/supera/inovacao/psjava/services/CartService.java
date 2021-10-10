@@ -17,6 +17,10 @@ public class CartService {
     @Autowired
     private ProductService productService;
 
+    public Cart save(Cart cart) {
+        return cartRepository.save(cart);
+    }
+
     public Cart checkout(Long cartId) {
         Cart cart = findOrFail(cartId);
         cart.checkout();

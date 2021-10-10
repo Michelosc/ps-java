@@ -4,9 +4,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -21,6 +23,6 @@ public class Product {
 
     private String image;
 
-    @ManyToOne
-    private Cart cart;
+    @ManyToMany(mappedBy = "products")
+    private List<Cart> carts;
 }

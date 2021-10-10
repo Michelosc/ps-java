@@ -15,4 +15,8 @@ public class ProductInputDisassembler {
     public Product toDomainObject(ProductDtoInput productDtoInput) {
         return modelMapper.map(productDtoInput, Product.class);
     }
+
+    public void copyToDomainObject(ProductDtoInput productDtoInput, Product product) {
+        modelMapper.map(productDtoInput, product);
+    }
 }
