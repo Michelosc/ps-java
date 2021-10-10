@@ -25,19 +25,32 @@ public class Cart {
 
     public void addProduct(Product product) {
         products.add(product);
-        subTotal.add(product.getPrice());
+        setSubTotal(getSubTotal().add(product.getPrice()));
         addShippingRate();
     }
 
-    public void addShippingRate() {
-        setShippingRate(new BigDecimal(10));
+    public void removeProduct(Product product) {
+        setSubTotal(getSubTotal().subtract(product.getPrice()));
+        products.remove(product);
+        removeShippingRate();
     }
 
+    public void addShippingRate() {
+        setShippingRate(new BigDecimal("10"));
+    }
+
+    public void removeShippingRate() { setShippingRate(new BigDecimal("-10"));}
+
     public void calculateTotalShippingRate() {
-        BigDecimal discountValue = new BigDecimal(250);
+        BigDecimal discountValue = new BigDecimal("250");
         if(shippingRate.compareTo(discountValue) >= 0) {
             setShippingRate(BigDecimal.ZERO);
         }
+    }
+
+    public void checkout() {
+        calculateTotalShippingRate();
+        setTotal(subTotal.add(shippingRate));
     }
 
 }
