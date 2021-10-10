@@ -79,27 +79,37 @@ public class CartController {
     @PutMapping("/{cartId}")
     @Transactional
     public ResponseEntity<?> addProduct(@PathVariable Long cartId, @RequestBody CartDtoInput cartDtoInput) {
-        Cart cart = cartService.findOrFail(cartId);
+        try {
+            Cart cart = cartService.findOrFail(cartId);
 
-        cartDtoInput.getProductIds().stream().forEach(idInput -> {
-            Product product = productService.findOrFail(idInput.getProductId());
-            cart.addProduct(product);
-        });
-        cart.checkout();
-        cartService.save(cart);
-        return ResponseEntity.status(HttpStatus.OK).body(cartEntityAssembler.toEntity(cart));
+            cartDtoInput.getProductIds().stream().forEach(idInput -> {
+                Product product = productService.findOrFail(idInput.getProductId());
+                cart.addProduct(product);
+            });
+            cart.checkout();
+            cartService.save(cart);
+            return ResponseEntity.status(HttpStatus.OK).body(cartEntityAssembler.toEntity(cart));
+        } catch (ProductNotFoundException | CartNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
     }
 
     @DeleteMapping("/{cartId}")
     @Transactional
     public ResponseEntity<?> removeProduct(@PathVariable Long cartId, @RequestBody CartDtoInput cartDtoInput) {
-        Cart cart = cartService.findOrFail(cartId);
-        cartDtoInput.getProductIds().stream().forEach(idInput -> {
-            Product product = productService.findOrFail(idInput.getProductId());
-            cart.removeProduct(product);
-        });
-        cart.checkout();
-        cartService.save(cart);
-        return ResponseEntity.status(HttpStatus.OK).body(cartEntityAssembler.toEntity(cart));
+        try {
+            Cart cart = cartService.findOrFail(cartId);
+            cartDtoInput.getProductIds().stream().forEach(idInput -> {
+                Product product = productService.findOrFail(idInput.getProductId());
+                cart.removeProduct(product);
+            });
+            cart.checkout();
+            cartService.save(cart);
+            return ResponseEntity.status(HttpStatus.OK).body(cartEntityAssembler.toEntity(cart));
+        } catch (ProductNotFoundException | CartNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
     }
 }
