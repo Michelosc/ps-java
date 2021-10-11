@@ -33,8 +33,13 @@ cd backend
 Listar Produtos
 - GET localhost:8080/produtos
 
+Iniciar o Carrinho
+- POST localhost:8080/carrinho
+
 Adicionar Produto ao Carrinho
 - PUT localhost:8080/carrinho/produtoId
+
+Remover Produto do Carrinho
 - DELETE localhost:8080/carrinho/produtoId
 
 # Autor
